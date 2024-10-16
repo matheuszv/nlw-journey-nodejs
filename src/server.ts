@@ -46,4 +46,4 @@ app.register(getParticipant)
 
 config();
 
-app.listen(3333)
+app.listen({ port: env.PORT })
