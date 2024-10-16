@@ -47,22 +47,20 @@ export async function createTrip(app: FastifyInstance) {
           starts_at,
           ends_at,
           participants: {
-            createMany: {
-              data: [
-                {
-                  name: owner_name,
-                  email: owner_email,
-                  is_owner: true,
-                  is_confirmed: true,
-                },
-                ...emails_to_invite.map((email) => {
-                  return { email }
-                }),
-              ],
-            },
+            create: [
+              {
+                name: owner_name,
+                email: owner_email,
+                is_owner: true,
+                is_confirmed: true,
+              },
+              ...emails_to_invite.map((email) => ({
+                email,
+              })),
+            ],
           },
         },
-      })
+      });
 
       const formattedStartDate = dayjs(starts_at).format('LL')
       const formattedEndDate = dayjs(ends_at).format('LL')
